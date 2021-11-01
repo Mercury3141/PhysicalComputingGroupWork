@@ -32,6 +32,8 @@ float alpha_down = 0.5;
 float previous_output = 0;
 float current_output = 0;
 
+int buttonPin = 5;
+
 void setup() {
   Serial.begin(9600);
   while(!Serial);
@@ -66,15 +68,16 @@ void loop() {
   ams.readRawValues(sensorValues);
   //ams.readCalibratedValues(calibratedValues);
 
-
+  if(digitalRead(buttonPin)){
   Serial.print(""); Serial.print(sensorValues[AS726x_VIOLET]);
-  Serial.print(""); Serial.print(sensorValues[AS726x_BLUE]);
-  Serial.print(""); Serial.print(sensorValues[AS726x_GREEN]);
-  Serial.print(""); Serial.print(sensorValues[AS726x_YELLOW]);
-  Serial.print(""); Serial.print(sensorValues[AS726x_ORANGE]);
-  Serial.print(""); Serial.print(sensorValues[AS726x_RED]);
+  Serial.print(","); Serial.print(sensorValues[AS726x_BLUE]);
+  Serial.print(","); Serial.print(sensorValues[AS726x_GREEN]);
+  Serial.print(","); Serial.print(sensorValues[AS726x_YELLOW]);
+  Serial.print(","); Serial.print(sensorValues[AS726x_ORANGE]);
+  Serial.print(","); Serial.print(sensorValues[AS726x_RED]);
   Serial.println();
 //  Serial.println();
+  }
 }
 
 
