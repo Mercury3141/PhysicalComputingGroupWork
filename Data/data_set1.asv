@@ -10,5 +10,4 @@ xlabel('time');
 ylabel('filtered / unfiltered signal');
 legend('lpf signal','raw signal');
 str1 = '3 bulbs in front of atelier door';
-%a = annotation('textarrow',x,y,'String','y = x ');
-%a1 = annotation('textarrow',40,800,'String',str1);
+a = annotation('textarrow',x,y,'String',str1);
