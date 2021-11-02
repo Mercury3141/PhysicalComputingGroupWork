@@ -1,9 +1,15 @@
 
 // MQTT client details:
 let broker = {
-    hostname: 'choopchoop.cloud.shiftr.io/',
+    hostname: 'arduinogang.cloud.shiftr.io/',
     port: 443
 };
+
+
+//testvariables
+let b22;
+let violetValue;
+
 
 // MQTT client:
 let client;
@@ -12,26 +18,34 @@ let client;
 // For shiftr.io type in both username and password
 
 let creds = {
-    clientID: 'p5',
-    userName: 'choopchoop',
-    password: 'yZ33bccMNKEzNtB1'
+    clientID: 'ML5',
+    userName: 'arduinogang',
+    password: 'GUhW31vL7eAbrIr6'
 };
 
 // topic to subscribe to when you connect
 // For shiftr.io, use whatever word you want 
-let topicPosition = 'pos';
-let topic = 'values';
-let topic2 = 'ledBlink';
+let topicViolet = 'violet';
+let topicBlue = 'blue';
+let topicGreen = 'green';
+let topicYellow = 'yellow';
+let topicOrange = 'orange';
+let topicRed = 'red';
+let topicBulb = 'bulbType';
 
 
-// position of the circle
-let xPos, yPos;
+//Sensor data buffer
+let data = {
+  violet: 0,
+  blue: 0,
+  green: 0
+};
 
 //button click
 let clicked = false;
 
 let lastTimeSent = 0;
-const sendInterval = 100;
+const sendInterval = 500;
 
 function setup() {
     createCanvas(400, 400);
@@ -40,6 +54,7 @@ function setup() {
     // set callback handlers for the client:
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
+
     // connect to the MQTT broker:
     client.connect(
         {
@@ -56,31 +71,27 @@ function setup() {
     // create a div for the response:
     remoteMsg =  createP("Waiting for message"); 
     remoteMsg.position(20, 80);
-
-    xPos = width/2;
-    yPos = height/2;
 }
 
 function draw() {
     background(255);
     noStroke();
-    // draw a circle when a message is received:
-    fill(0);
-    // circle moves with the message:
-    circle(xPos, yPos, 30);
-    
+
     if (millis() - lastTimeSent > sendInterval) {
-        sendRandomMsg();
+        sendBulb();
         lastTimeSent = millis();
     }
-    
-    
 }
 
 // called when the client connects
 function onConnect() {
     localMsg.html('client is connected');
-    client.subscribe(topicPosition);
+    client.subscribe(topicViolet);
+    client.subscribe(topicBlue);
+    client.subscribe(topicGreen);
+    client.subscribe(topicYellow);
+    client.subscribe(topicOrange);
+    client.subscribe(topicRed);
 }
 
 // called when the client loses its connection
@@ -93,16 +104,23 @@ function onConnectionLost(response) {
 
 // called when a message arrives
 function onMessageArrived(message) {
+
+    //display received message
     remoteMsg.html(message.payloadString);
     
     // assume the message payload is a JSON object  {"x":xPos, "y":yPos}
     // parse it and use the X and Y:
-    var acc = JSON.parse(message.payloadString);
-    xPos = acc.x;
-    yPos = acc.y;
-     
-    
+    let incomData  = JSON.parse(message.payloadString); 
+    data.violet = incomData.violet;
+    data.blue = incomData.blue;
+    data.green = incomData.green;
+    data.yellow = incomData.yellow;
+    data.orange = incomData.orange;
+    data.red = incomData.red;
+    console.log("blue: " + data.blue);
+    console.log("red: " + data.red);
 }
+
 
 // called when you want to send a message:
 function sendMqttMessage(msg, tpc) {
@@ -119,29 +137,20 @@ function sendMqttMessage(msg, tpc) {
     }
 }
 
-// called when you want to send a message
-function sendRandomMsg(){
-    let r = floor(random(0, 4));
-    switch (r) {
-      case(0):
-        sendMqttMessage("I", topic);
-        break;
-      case(1):
-        sendMqttMessage("A", topic);
-        break;
-      case(2):
-        sendMqttMessage("D", topic);
-        break;
-    }
-  }
-  
-function sendBlink() {
-  if(clicked){
-    sendMqttMessage(0, topic2);
-  } else {
-    sendMqttMessage(1, topic2);
-  }
-  clicked = !clicked;
+function sendBulb() {
+  //switch case for bulbs
+    sendMqttMessage('f1', topicBulb);
 }
-  
-  
+
+function addDatapoint(){
+  let violet, blue, green, yellow, orange, red;
+
+  console.log("did some data");
+  b22 = document.getElementById("bulbType").value;
+
+  //save current sensor readings to variable
+  //violet = data.violet;
+
+
+  //send to neuronal network
+}

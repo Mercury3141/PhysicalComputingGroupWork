@@ -5,7 +5,7 @@
 
   <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
   <script language="javascript" type="text/javascript" src="libraries/p5.min.js"></script>
-  <script language="javascript" type="text/javascript" src="p5MqttShiftr.js"></script>
+  <script language="javascript" type="text/javascript" src="mqtt.js"></script>
   <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
   <!-- This line removes any default padding and style.
@@ -15,9 +15,7 @@
 </head>
 
 <body>
-<label class="switch" id="toggle">
-  <input type="checkbox" onclick="sendBlink()">
-  <span class="slider"></span>
-</label>
+<textarea id="bulbType"></textarea>
+<button type="button" onclick="addDatapoint()">Add Datapoint</button>
 </body>
 </html>
