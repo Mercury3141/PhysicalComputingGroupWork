@@ -5,12 +5,13 @@ x = linspace(1,6,6);
 
 %% Calculate Means
 mean_cast_low = [mean(cast_low(:,1)) mean(cast_low(:,2)) mean(cast_low(:,3)) mean(cast_low(:,4)) mean(cast_low(:,5)) mean(cast_low(:,6))];
-mean_cast_med = [mean(cast_med(:,1)) mean(cast_med(:,2)) mean(cast_med(:,3)) mean(cast_med(:,4)) mean(cast_med(:,5)) mean(cast_(:,6))];
+mean_cast_med = [mean(cast_med(:,1)) mean(cast_med(:,2)) mean(cast_med(:,3)) mean(cast_med(:,4)) mean(cast_med(:,5)) mean(cast_med(:,6))];
+mean_cast_high = [mean(cast_high(:,1)) mean(cast_high(:,2)) mean(cast_high(:,3)) mean(cast_high(:,4)) mean(cast_high(:,5)) mean(cast_high(:,6))];
 
 %% Plot Cast
 
 figure;
-tiledlayout(4,1);
+tiledlayout(3,1);
 
 %plot(x,cast_low(1,:))
 
@@ -36,6 +37,16 @@ nexttile([1 1]);
 b_cast_high = bar(cast_high);
 title('cast high');
 
+figure;
+tiledlayout(3,1);
+
 nexttile([1 1]);
-b_mean_cast = bar(mean_cast);
-title('cast mean');
+b_mean_cast_low = bar(mean_cast_low);
+title('cast mean low');
+
+nexttile([1 1]);
+b_mean_cast_med = bar(mean_cast_med);
+title('cast mean med');
+nexttile([1 1]);
+b_mean_cast_high = bar(mean_cast_high);
+title('cast mean high');
