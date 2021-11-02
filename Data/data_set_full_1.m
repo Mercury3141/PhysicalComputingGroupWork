@@ -48,5 +48,5 @@ nexttile([1 1]);
 b_mean_cast_med = bar(mean_cast_med);
 title('cast mean med');
 nexttile([1 1]);
-b_mean_cast_med = bar(mean_cast_high);
+b_mean_cast_high = bar(mean_cast_high);
 title('cast mean high');
