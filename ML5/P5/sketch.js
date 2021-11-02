@@ -10,27 +10,10 @@ let targetLabel = 'C';
 
 let state = 'collection';
 
-let notes = {
-  C: 261.6256,
-  D: 293.6648,
-  E: 329.6276
-};
-
 let env, wave;
 
 function setup() {
   createCanvas(400, 400);
-
-  env = new p5.Envelope();
-  env.setADSR(0.05, 0.1, 0.5, 1);
-  env.setRange(1.2, 0);
-
-  wave = new p5.Oscillator();
-
-  wave.setType('sine');
-  wave.start();
-  wave.freq(440);
-  wave.amp(env);
 
   let options = {
     inputs: ['x', 'y'],
