@@ -5,18 +5,18 @@
 // https://editor.p5js.org/codingtrain/sketches/zwGahux8a
 
 let model;
-let targetLabel = 'C';
+let targetLabel = 'f1';
 // let trainingData = [];
 
 let state = 'collection';
 
-let env, wave;
+//let env, wave;
 
 function setup() {
-  createCanvas(400, 400);
+  //createCanvas(400, 400);
 
   let options = {
-    inputs: ['x', 'y'],
+    inputs: ['violet', 'blue', 'green', 'yellow', 'orange', 'red'],
     outputs: ['label'],
     task: 'classification',
     debug: 'true'
@@ -48,27 +48,20 @@ function finishedTraining() {
   state = 'prediction';
 }
 
-function mousePressed() {
-  let inputs = {
-    x: mouseX,
-    y: mouseY
-  };
+function keyPressed() {
+  if (key == ' '){
+    let inputs = {
+      x: mouseX,
+      y: mouseY
+    };
+  }
+
 
   if (state == 'collection') {
     let target = {
       label: targetLabel
     };
     model.addData(inputs, target);
-    stroke(0);
-    noFill();
-    ellipse(mouseX, mouseY, 24);
-    fill(0);
-    noStroke();
-    textAlign(CENTER, CENTER);
-    text(targetLabel, mouseX, mouseY);
-
-    wave.freq(notes[targetLabel]);
-    env.play();
   } else if (state == 'prediction') {
     model.classify(inputs, gotResults);
   }
@@ -80,14 +73,5 @@ function gotResults(error, results) {
     return;
   }
   console.log(results);
-  stroke(0);
-  fill(0, 0, 255, 100);
-  ellipse(mouseX, mouseY, 24);
-  fill(0);
-  noStroke();
-  textAlign(CENTER, CENTER);
   let label = results[0].label;
-  text(label, mouseX, mouseY);
-  wave.freq(notes[label]);
-  env.play();
 }
