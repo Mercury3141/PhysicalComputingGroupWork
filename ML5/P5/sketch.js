@@ -75,10 +75,10 @@ function finishedTraining() {
 
 function inputDataPoints(dataPoints) {
   const tableLength = tableSpectral.getRowCount();
-  console.log('im here');
-  console.log(tableLength);
+  //console.log('im here');
+  //console.log(tableLength);
   for (let i = 0; i < tableLength; i++) {  
-    console.log(dataPoints[i].getNum('violet'));
+    //console.log(dataPoints[i].getNum('violet'));
     let inputs = {
         violet: dataPoints[i].getNum('violet'),
         blue: dataPoints[i].getNum('blue'),
@@ -107,32 +107,26 @@ function gotResults(error, results) {
     console.error(error);
     return;
   }
-  console.log(results);
+  //console.log(results);
   let label = results[0].label;
+  console.log(label);
 }
 
 
 function inputPredictionPoints(predictionPoints){
-  const tableLength = tableSpectral.getRowCount();
-  console.log('im here');
-  console.log(tableLength);
+  const tableLength = tablePrediction.getRowCount();
   for (let i = 0; i < tableLength; i++) {  
-    console.log(dataPoints[i].getNum('violet'));
     let inputs = {
-        violet: dataPoints[i].getNum('violet'),
-        blue: dataPoints[i].getNum('blue'),
-        green: dataPoints[i].getNum('green'),
-        yellow: dataPoints[i].getNum('yellow'),
-        orange: dataPoints[i].getNum('orange'),
-        red: dataPoints[i].getNum('red')
+        violet: predictionPoints[i].getNum('violet'),
+        blue: predictionPoints[i].getNum('blue'),
+        green: predictionPoints[i].getNum('green'),
+        yellow: predictionPoints[i].getNum('yellow'),
+        orange: predictionPoints[i].getNum('orange'),
+        red: predictionPoints[i].getNum('red')
       };
-
-      let target = {
-        label: dataPoints[i].getString('label'), //set target label
-      };
-      model.addData(inputs, target);
       console.log(inputs);
-      console.log(target);
-      console.log('added datapoints')
+      console.log('added predictionPoints');
+      model.classify(inputs, gotResults);
+      //classifyNewReading();
   }  
 }
