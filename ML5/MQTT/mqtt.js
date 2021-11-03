@@ -38,7 +38,10 @@ let topicBulb = 'bulbType';
 let data = {
   violet: 0,
   blue: 0,
-  green: 0
+  green: 0,
+  yellow: 0,
+  orange: 0,
+  red: 0
 };
 
 //button click
@@ -108,7 +111,7 @@ function onMessageArrived(message) {
     //display received message
     remoteMsg.html(message.payloadString);
     
-    // assume the message payload is a JSON object  {"x":xPos, "y":yPos}
+    // assume the message payload is a JSON object  {"x":xPos, "y":yPos}  {"violet":15, "blue":330}  --> key value pairs
     // parse it and use the X and Y:
     let incomData  = JSON.parse(message.payloadString); 
     data.violet = incomData.violet;
@@ -119,6 +122,9 @@ function onMessageArrived(message) {
     data.red = incomData.red;
     console.log("blue: " + data.blue);
     console.log("red: " + data.red);
+
+    //data = {...incomData};
+    //data = JSON.parse(message.payloadString);
 }
 
 
