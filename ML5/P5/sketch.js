@@ -14,7 +14,7 @@ let state = 'collection';
 const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
 
 function preload() {
-  table = loadTable('DataSet2.csv', 'csv', 'header');
+  table = loadTable('DataSet3.csv', 'csv', 'header');
   spectralData = table.getRows();
   console.log(spectralData);
 }
