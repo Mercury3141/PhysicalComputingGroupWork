@@ -56,23 +56,6 @@ function keyPressed() {
   }
 }
 
-function ingestData(){
-  for (let i = 0; i < tableLength; i++) {         
-    let trainingDataReading = [];
-    for (let n = 0; n < 7; n++){
-      let header = tableHeader[n];
-      console.log(header);
-      let value = parseInt(table.get(n,header))
-      trainingDataReading[n] = value;
-      console.log(trainingDataReading);
-    }
-  
-    trainingData[i] = trainingDataReading;
-    //inputDataPoint(trainingDataReading);
-  }
-  console.log('data ingested. you can proceed w/ training')
-  console.log(trainingData);
-}
 
 function whileTraining(epoch, loss) {
   console.log(epoch);
