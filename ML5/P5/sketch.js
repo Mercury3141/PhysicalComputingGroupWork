@@ -4,8 +4,10 @@
 // https://youtu.be/8HEgeAbYphA
 // https://editor.p5js.org/codingtrain/sketches/zwGahux8a
 
-let table;
+let tableSpectral;
+let tablePrediction;
 let spectralData = [];
+let predictionData = [];
 let model;
 let targetLabel = 'f1';
 let trainingData = [];
@@ -14,18 +16,18 @@ let state = 'collection';
 const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
 
 function preload() {
-  table = loadTable('DataSet3.csv', 'csv', 'header');
-  spectralData = table.getRows();
+  tableSpectral = loadTable('DataSet3.csv', 'csv', 'header');
+  spectralData = tableSpectral.getRows();
   console.log(spectralData);
+
+  tablePrediction = loadTable('PredictionData1.csv', 'csv', 'header');
+  predictionData = tableSpectral.getRows();
+  console.log(predictionData);
 }
 
-//const tableLength = table.getRowCount();
-
 function setup() {
-  print(table.getRowCount() + ' total rows in table');
+  print(tableSpectral.getRowCount() + ' total rows in table');
   
-  //console.log(tableLength);
- // print(table.getColumnCount() + ' total columns in table');
 
   let options = {
     inputs: ['violet', 'blue', 'green', 'yellow', 'orange', 'red'],
@@ -47,10 +49,14 @@ function keyPressed() {
     };
     model.train(options, whileTraining, finishedTraining);
   } else if (key == 'i'){
-    console.log('starting data ingestion')
-    //ingestData(); // start data ingestion//
+    console.log('starting data ingestion');
     inputDataPoints(spectralData);
     console.log('done');
+  }
+  else if (key == 'p'){
+    console.log('predict data:');
+    inputPredictionPoints(predictionData);
+    console.log('done prediction');
   }
   else {
     console.log('start data ingestion (i) or model training (t)');
@@ -68,11 +74,11 @@ function finishedTraining() {
 }
 
 function inputDataPoints(dataPoints) {
-  const tableLength = table.getRowCount();
-  console.log('im here');
-  console.log(tableLength);
+  const tableLength = tableSpectral.getRowCount();
+  //console.log('im here');
+  //console.log(tableLength);
   for (let i = 0; i < tableLength; i++) {  
-    console.log(dataPoints[i].getNum('violet'));
+    //console.log(dataPoints[i].getNum('violet'));
     let inputs = {
         violet: dataPoints[i].getNum('violet'),
         blue: dataPoints[i].getNum('blue'),
@@ -101,6 +107,26 @@ function gotResults(error, results) {
     console.error(error);
     return;
   }
-  console.log(results);
+  //console.log(results);
   let label = results[0].label;
+  console.log(label);
+}
+
+
+function inputPredictionPoints(predictionPoints){
+  const tableLength = tablePrediction.getRowCount();
+  for (let i = 0; i < tableLength; i++) {  
+    let inputs = {
+        violet: predictionPoints[i].getNum('violet'),
+        blue: predictionPoints[i].getNum('blue'),
+        green: predictionPoints[i].getNum('green'),
+        yellow: predictionPoints[i].getNum('yellow'),
+        orange: predictionPoints[i].getNum('orange'),
+        red: predictionPoints[i].getNum('red')
+      };
+      console.log(inputs);
+      console.log('added predictionPoints');
+      model.classify(inputs, gotResults);
+      //classifyNewReading();
+  }  
 }
