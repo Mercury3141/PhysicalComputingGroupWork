@@ -4,16 +4,28 @@
 // https://youtu.be/8HEgeAbYphA
 // https://editor.p5js.org/codingtrain/sketches/zwGahux8a
 
+let table;
+let spectralData = [];
 let model;
 let targetLabel = 'f1';
-// let trainingData = [];
-
+let trainingData = [];
 let state = 'collection';
 
-//let env, wave;
+const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
+
+function preload() {
+  table = loadTable('DataSet2.csv', 'csv', 'header');
+  spectralData = table.getRows();
+  console.log(spectralData);
+}
+
+//const tableLength = table.getRowCount();
 
 function setup() {
-  //createCanvas(400, 400);
+  print(table.getRowCount() + ' total rows in table');
+  
+  //console.log(tableLength);
+ // print(table.getColumnCount() + ' total columns in table');
 
   let options = {
     inputs: ['violet', 'blue', 'green', 'yellow', 'orange', 'red'],
@@ -22,7 +34,6 @@ function setup() {
     debug: 'true'
   };
   model = ml5.neuralNetwork(options);
-  background(255);
 }
 
 function keyPressed() {
@@ -31,12 +42,36 @@ function keyPressed() {
     console.log('starting training');
     model.normalizeData();
     let options = {
-      epochs: 200
+      epochs: 300
     };
     model.train(options, whileTraining, finishedTraining);
-  } else {
-    targetLabel = key.toUpperCase();
+  } else if (key == 'i'){
+    console.log('starting data ingestion')
+    //ingestData(); // start data ingestion//
+    inputDataPoints(spectralData);
+    console.log('done');
   }
+  else {
+    console.log('start data ingestion (i) or model training (t)');
+  }
+}
+
+function ingestData(){
+  for (let i = 0; i < tableLength; i++) {         
+    let trainingDataReading = [];
+    for (let n = 0; n < 7; n++){
+      let header = tableHeader[n];
+      console.log(header);
+      let value = parseInt(table.get(n,header))
+      trainingDataReading[n] = value;
+      console.log(trainingDataReading);
+    }
+  
+    trainingData[i] = trainingDataReading;
+    //inputDataPoint(trainingDataReading);
+  }
+  console.log('data ingested. you can proceed w/ training')
+  console.log(trainingData);
 }
 
 function whileTraining(epoch, loss) {
@@ -48,23 +83,33 @@ function finishedTraining() {
   state = 'prediction';
 }
 
-function keyPressed() {
-  if (key == ' '){
+function inputDataPoints(dataPoints) {
+  const tableLength = table.getRowCount();
+  console.log('im here');
+  console.log(tableLength);
+  for (let i = 0; i < tableLength; i++) {  
+    console.log(dataPoints[i].getNum('violet'));
     let inputs = {
-      x: mouseX,
-      y: mouseY
-    };
-  }
+        violet: dataPoints[i].getNum('violet'),
+        blue: dataPoints[i].getNum('blue'),
+        green: dataPoints[i].getNum('green'),
+        yellow: dataPoints[i].getNum('yellow'),
+        orange: dataPoints[i].getNum('orange'),
+        red: dataPoints[i].getNum('red')
+      };
 
+      let target = {
+        label: dataPoints[i].getString('label'), //set target label
+      };
+      model.addData(inputs, target);
+      console.log(inputs);
+      console.log(target);
+      console.log('added datapoints')
+  }  
+}
 
-  if (state == 'collection') {
-    let target = {
-      label: targetLabel
-    };
-    model.addData(inputs, target);
-  } else if (state == 'prediction') {
-    model.classify(inputs, gotResults);
-  }
+function classifyNewReading(){
+  model.classify(inputs, gotResults); //predict
 }
 
 function gotResults(error, results) {
