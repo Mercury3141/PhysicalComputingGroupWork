@@ -46,6 +46,8 @@ void messageReceived(String &topic, String &payload) {
 float alpha_up = 0.1;
 float alpha_down = 0.5;
 
+int upperThreshold = 5000;
+
 float previous_violet = 0;
 float current_violet = 0;
 float previous_blue = 0;
@@ -58,6 +60,14 @@ float previous_orange = 0;
 float current_orange = 0;
 float previous_red = 0;
 float current_red = 0;
+
+float mapped_violet = 0;
+float mapped_blue = 0;
+float mapped_green = 0;
+float mapped_yellow = 0;
+float mapped_orange = 0;
+float mapped_red = 0;
+
 
 void setup() {
   //mqtt shiftr
@@ -189,11 +199,21 @@ void loop() {
 //  Serial.print(","); Serial.print(current_red);
 //  Serial.println();
 
+mapped_violet = map((constrain(current_violet,0,upperThreshold)),0,upperThreshold,0,127);
+mapped_blue = map((constrain(current_blue,0,upperThreshold)),0,upperThreshold,0,127);
+mapped_green = map((constrain(current_green,0,upperThreshold)),0,upperThreshold,0,127);
+mapped_yellow = map((constrain(current_yellow,0,upperThreshold)),0,upperThreshold,0,127);
+mapped_orange = map((constrain(current_orange,0,upperThreshold)),0,upperThreshold,0,127);
+mapped_red = map((constrain(current_red,0,upperThreshold)),0,upperThreshold,0,127);
 
 //MQTT Publisher
   client.publish("spectrums", "{\"violet\":" + String(violet) + ",\"blue\":" + String(blue) + ",\"green\":" + String(green) + ",\"yellow\":" + String(yellow) + ",\"orange\":" + String(orange) + ",\"red\":" + String(red) + "}");
   client.publish("filteredSpectrums", "{\"violet\":" + String(current_violet) + ",\"blue\":" + String(current_blue) + ",\"green\":" + String(current_green) + ",\"yellow\":" + String(current_yellow) + ",\"orange\":" + String(current_orange) + ",\"red\":" + String(current_red) + "}");
-  client.publish("violet", String(violet) );
-  client.publish("blue", String(blue) );
+  client.publish("violet", String(mapped_violet));
+  client.publish("blue", String(mapped_blue));
+  client.publish("green", String(mapped_green));
+  client.publish("yellow", String(mapped_yellow));
+  client.publish("orange", String(mapped_orange));
+  client.publish("red", String(mapped_red));
 
 }
