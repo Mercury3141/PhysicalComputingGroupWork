@@ -16,13 +16,13 @@ let state = 'collection';
 const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
 
 function preload() {
-  tableSpectral = loadTable('DataSet3.csv', 'csv', 'header');
+  tableSpectral = loadTable('DataSet5.csv', 'csv', 'header');
   spectralData = tableSpectral.getRows();
-  console.log(spectralData);
+  //console.log(spectralData);
 
-  tablePrediction = loadTable('DataSet3.csv', 'csv', 'header');
+  tablePrediction = loadTable('DataSet5.csv', 'csv', 'header');
   predictionData = tableSpectral.getRows();
-  console.log(predictionData);
+  //console.log(predictionData);
 }
 
 function setup() {
@@ -45,7 +45,7 @@ function keyPressed() {
     console.log('starting training');
     model.normalizeData();
     let options = {
-      epochs: 400
+      epochs: 250
     };
     model.train(options, whileTraining, finishedTraining);
   } else if (key == 'i'){
@@ -92,24 +92,10 @@ function inputDataPoints(dataPoints) {
         label: dataPoints[i].getString('label'), //set target label
       };
       model.addData(inputs, target);
-      console.log(inputs);
-      console.log(target);
+      //console.log(inputs);
+      //console.log(target);
       console.log('added datapoints')
   }  
-}
-
-function classifyNewReading(){
-  model.classify(inputs, gotResults); //predict
-}
-
-function gotResults(error, results) {
-  if (error) {
-    console.error(error);
-    return;
-  }
-  //console.log(results);
-  let label = results[0].label;
-  console.log(label);
 }
 
 
@@ -124,9 +110,17 @@ function inputPredictionPoints(predictionPoints){
         orange: predictionPoints[i].getNum('orange'),
         red: predictionPoints[i].getNum('red')
       };
-      console.log(inputs);
       console.log('added predictionPoints');
       model.classify(inputs, gotResults);
-      //classifyNewReading();
   }  
+}
+
+function gotResults(error, results) {
+  if (error) {
+    console.error(error);
+    return;
+  }
+  //console.log(results);
+  let label = results[0].label;
+  console.log(label);
 }
