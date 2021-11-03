@@ -31,7 +31,8 @@ function setup() {
     inputs: ['violet', 'blue', 'green', 'yellow', 'orange', 'red'],
     outputs: ['label'],
     task: 'classification',
-    debug: 'true'
+    debug: 'true',
+    learningRate: 0.7
   };
   model = ml5.neuralNetwork(options);
 }
@@ -42,7 +43,7 @@ function keyPressed() {
     console.log('starting training');
     model.normalizeData();
     let options = {
-      epochs: 300
+      epochs: 400
     };
     model.train(options, whileTraining, finishedTraining);
   } else if (key == 'i'){
