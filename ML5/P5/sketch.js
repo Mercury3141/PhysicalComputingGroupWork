@@ -20,7 +20,7 @@ function preload() {
   spectralData = tableSpectral.getRows();
   console.log(spectralData);
 
-  tablePrediction = loadTable('PredictionData1.csv', 'csv', 'header');
+  tablePrediction = loadTable('DataSet3.csv', 'csv', 'header');
   predictionData = tableSpectral.getRows();
   console.log(predictionData);
 }
