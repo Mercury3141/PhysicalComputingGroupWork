@@ -16,11 +16,11 @@ let state = 'collection';
 const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
 
 function preload() {
-  tableSpectral = loadTable('DataSet101.csv', 'csv', 'header');
+  tableSpectral = loadTable('DataSet13.csv', 'csv', 'header');
   spectralData = tableSpectral.getRows();
   //console.log(spectralData);
 
-  tablePrediction = loadTable('DataSet101.csv', 'csv', 'header');
+  tablePrediction = loadTable('PredictionData14.csv', 'csv', 'header');
   predictionData = tableSpectral.getRows();
   //console.log(predictionData);
 }
@@ -34,7 +34,7 @@ function setup() {
     outputs: ['label'],
     task: 'classification',
     debug: 'true',
-    learningRate: 0.7
+    learningRate: 0.5
   };
   model = ml5.neuralNetwork(options);
 }
@@ -45,7 +45,7 @@ function keyPressed() {
     console.log('starting training');
     model.normalizeData();
     let options = {
-      epochs: 250
+      epochs: 200
     };
     model.train(options, whileTraining, finishedTraining);
   } else if (key == 'i'){
@@ -122,5 +122,6 @@ function gotResults(error, results) {
   }
   //console.log(results);
   let label = results[0].label;
+  //console.log(results);
   console.log(label);
 }
