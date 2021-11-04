@@ -99,7 +99,7 @@ void setup() {
 
 void loop() {
   client.loop();
-  delay(10);
+  delay(100);
 
   // check if connected
   if (!client.connected()) {
