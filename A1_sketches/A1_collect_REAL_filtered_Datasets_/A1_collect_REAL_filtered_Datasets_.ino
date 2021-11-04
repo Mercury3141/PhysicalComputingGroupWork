@@ -126,7 +126,7 @@ void loop() {
   }
   previous_red = current_red;
 
-  if (digitalRead(buttonPin) && current_violet > 200 && current_blue > 200 && current_green > 200 && current_yellow > 200 && current_orange > 200 && current_red > 200) {
+  if (digitalRead(buttonPin) == 0 && current_violet > 200 && current_blue > 200 && current_green > 200 && current_yellow > 200 && current_orange > 200 && current_red > 200) {
 //    Serial.print(""); Serial.print(violet);
     Serial.print(""); Serial.print(current_violet);
 //    Serial.print(""); Serial.print(blue);

@@ -16,11 +16,11 @@ let state = 'collection';
 const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
 
 function preload() {
-  tableSpectral = loadTable('DataSet5.csv', 'csv', 'header');
+  tableSpectral = loadTable('DataSet101.csv', 'csv', 'header');
   spectralData = tableSpectral.getRows();
   //console.log(spectralData);
 
-  tablePrediction = loadTable('DataSet5.csv', 'csv', 'header');
+  tablePrediction = loadTable('DataSet101.csv', 'csv', 'header');
   predictionData = tableSpectral.getRows();
   //console.log(predictionData);
 }
