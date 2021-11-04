@@ -46,7 +46,7 @@ void messageReceived(String &topic, String &payload) {
 float alpha_up = 0.1;
 float alpha_down = 0.5;
 
-int upperThreshold = 5000;
+int upperThreshold = 1400;
 
 float previous_violet = 0;
 float current_violet = 0;
