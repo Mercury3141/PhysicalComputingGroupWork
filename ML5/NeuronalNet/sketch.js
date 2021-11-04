@@ -80,11 +80,11 @@ function inputDataPoints(dataPoints) {
   for (let i = 0; i < tableLength; i++) {  
     //console.log(dataPoints[i].getNum('violet'));
     let inputs = {
-        violet: dataPoints[i].getNum('violet'),
-        blue: dataPoints[i].getNum('blue'),
+        //violet: dataPoints[i].getNum('violet'),
+        //blue: dataPoints[i].getNum('blue'),
         green: dataPoints[i].getNum('green'),
-        yellow: dataPoints[i].getNum('yellow'),
-        orange: dataPoints[i].getNum('orange'),
+        //yellow: dataPoints[i].getNum('yellow'),
+        //orange: dataPoints[i].getNum('orange'),
         red: dataPoints[i].getNum('red')
       };
 
@@ -103,11 +103,11 @@ function inputPredictionPoints(predictionPoints){
   const tableLength = tablePrediction.getRowCount();
   for (let i = 0; i < tableLength; i++) {  
     let inputs = {
-        violet: predictionPoints[i].getNum('violet'),
-        blue: predictionPoints[i].getNum('blue'),
+        //violet: predictionPoints[i].getNum('violet'),
+        //blue: predictionPoints[i].getNum('blue'),
         green: predictionPoints[i].getNum('green'),
-        yellow: predictionPoints[i].getNum('yellow'),
-        orange: predictionPoints[i].getNum('orange'),
+        //yellow: predictionPoints[i].getNum('yellow'),
+        //orange: predictionPoints[i].getNum('orange'),
         red: predictionPoints[i].getNum('red')
       };
       console.log('added predictionPoints');
