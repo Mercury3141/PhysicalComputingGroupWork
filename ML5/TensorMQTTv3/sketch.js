@@ -1,5 +1,8 @@
 //////// MQTT
 
+//atelier = 0
+//draussen = 1
+
 // MQTT client details:
 let broker = {
   hostname: "arduinogang.cloud.shiftr.io/",
@@ -67,7 +70,8 @@ let tableHeader = [
   "red",
   "label",
 ];
-let labelList = ["atelier", "draussen"];
+let labelList = ["0", "1"];
+//let labelList = ["atelier", "draussen"];
 
 let next = 0;
 
@@ -297,7 +301,7 @@ function sendMqttMessage(msg, tpc) {
 
 function sendBulb() {
   //switch case for bulbs
-  //sendMqttMessage(predictionMqtt, topicBulb);
-  sendMqttMessage('1', topicBulb);
+  sendMqttMessage(predictionMqtt, topicBulb);
+  //sendMqttMessage('1', topicBulb);
 
 }
