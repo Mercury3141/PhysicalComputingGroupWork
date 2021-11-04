@@ -18,7 +18,7 @@ let client;
 // For shiftr.io type in both username and password
 
 let creds = {
-    clientID: 'ML5',
+    clientID: 'ML',
     userName: 'arduinogang',
     password: 'GUhW31vL7eAbrIr6'
 };
