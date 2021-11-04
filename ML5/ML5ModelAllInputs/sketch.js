@@ -12,7 +12,7 @@ let model;
 let targetLabel = 'f1';
 let trainingData = [];
 let state = 'collection';
-
+var options;
 const tableHeader = ['violet','blue','green','yellow','orange','red','label'];
 
 function preload() {
@@ -21,7 +21,7 @@ function preload() {
   //console.log(spectralData);
 
   tablePrediction = loadTable('DataSet103.csv', 'csv', 'header');
-  predictionData = tableSpectral.getRows();
+  predictionData = tablePrediction.getRows();
   //console.log(predictionData);
 }
 
@@ -29,36 +29,24 @@ function setup() {
   print(tableSpectral.getRowCount() + ' total rows in table');
   
 
-  let options = {
+  options = {
     //inputs: ['violet', 'blue', 'green', 'yellow', 'orange', 'red'],
     inputs: 2,
     outputs: ['label'],
-    task: 'classification',
+    task: 'regression',
     debug: 'true',
-    learningRate: 0.2
-    
-    /*
-    layers: [
-      
-      {
-      type: 'dense',
-      units: 16,
-      activation: 'sigmoid'
-    }
-  ]
-*/
+    learningRate: 0.2,
+    epochs: 50,
   };
   model = ml5.neuralNetwork(options);
+
 }
 
 function keyPressed() {
   if (key == 't') {
     state = 'training';
     console.log('starting training');
-    model.normalizeData();
-    let options = {
-      epochs: 50
-    };
+ 
     model.train(options, whileTraining, finishedTraining);
   } else if (key == 'i'){
     console.log('starting data ingestion');
@@ -100,12 +88,16 @@ function inputDataPoints(dataPoints) {
         red: dataPoints[i].getNum('red')
       };
 
-      let target = {
-        label: dataPoints[i].getString('label'), //set target label
+      let outputs = {
+        label: dataPoints[i].getNum('label'), //set target label
       };
-      model.addData(inputs, target);
+    
+      model.addData(inputs, outputs);
+      model.normalizeData();
+      console.log("normalize" + ":" + neuralNetworkData.meta.isNormalized);
+     
       //console.log(inputs);
-      //console.log(target);
+      console.log(inputs);
       console.log('added datapoints')
   }  
 }
@@ -122,8 +114,10 @@ function inputPredictionPoints(predictionPoints){
         //orange: predictionPoints[i].getNum('orange'),
         red: predictionPoints[i].getNum('red')
       };
+    
       console.log('added predictionPoints');
-      model.classify(inputs, gotResults);
+     console.log(inputs[i])
+      model.predict(inputs, gotResults);
   }  
 }
 
@@ -133,7 +127,7 @@ function gotResults(error, results) {
     return;
   }
   //console.log(results);
-  let label = results[0].label;
-  //console.log(results);
-  console.log(label);
+  let label = results[0].value;
+  console.log(results);
+  //console.log(label);
 }
