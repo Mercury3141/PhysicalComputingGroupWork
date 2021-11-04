@@ -301,7 +301,8 @@ function sendMqttMessage(msg, tpc) {
 
 function sendBulb() {
   //switch case for bulbs
-  sendMqttMessage(predictionMqtt, topicBulb);
+  let rdyToSend = int(predictionMqtt);
+  sendMqttMessage(rdyToSend, topicBulb);
   //sendMqttMessage('1', topicBulb);
 
 }
