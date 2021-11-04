@@ -1,2 +1,2 @@
-#define WIFI_SSID "LuciPad"
-#define WIFI_PASS "janoschMagsHart"
+#define WIFI_SSID "Janoschs iPhone"
+#define WIFI_PASS "12345678"
