@@ -31,7 +31,7 @@ let creds = {
 
 // topic to subscribe to when you connect
 // For shiftr.io, use whatever word you want
-let topicViolet = "filteredSpectrums";
+let topicSpectrum = "filteredSpectrums";
 let topicBulb = "bulb";
 
 //Sensor data buffer
@@ -224,7 +224,7 @@ function draw() {
 // called when the client connects
 function onConnect() {
   localMsg.html("client is connected");
-  client.subscribe(topicViolet);
+  client.subscribe(topicSpectrum);
 }
 
 // called when the client loses its connection
